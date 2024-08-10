@@ -1,6 +1,4 @@
 package kg.attractor.controlw.dao;
-
-
 import kg.attractor.controlw.dto.UserDto;
 import kg.attractor.controlw.model.User;
 import lombok.RequiredArgsConstructor;

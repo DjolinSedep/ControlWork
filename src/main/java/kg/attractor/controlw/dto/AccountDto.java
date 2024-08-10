@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountDto {
-
     private Long userId;
     private String currency;
 }

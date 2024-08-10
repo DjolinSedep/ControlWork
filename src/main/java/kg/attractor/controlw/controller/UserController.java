@@ -26,14 +26,12 @@ public class UserController {
             return new ResponseEntity<>("Имя пользователя уже занято", HttpStatus.BAD_REQUEST);
         }
 
-
         User user = User.builder()
                 .username(registerRequest.getUsername())
                 .email(registerRequest.getPhoneNumber() + "@example.com")
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .isAdmin(false)
                 .build();
-
         userRepository.save(user);
 
         return new ResponseEntity<>("Пользователь зарегистрирован", HttpStatus.CREATED);

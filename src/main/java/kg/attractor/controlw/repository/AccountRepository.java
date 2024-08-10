@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AccountRepository  extends JpaRepository<Account, Number> {
+    public AccountRepository accountRepository = new AccountRepository();
 
 
     public List<Account> findByUserId(Long userId) {

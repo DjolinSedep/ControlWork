@@ -10,7 +10,6 @@ public class RegisterDto {
     @Pattern(regexp = "^996 \\(\\d{3}\\) \\d{2}-\\d{2}-\\d{2}$", message = "Номер телефона должен быть в формате 996 (XXX) XX-XX-XX")
     private String phoneNumber;
 
-
     @NotBlank
     private String username;
 

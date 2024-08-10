@@ -11,6 +11,6 @@ public class TransactionDto {
 
     private Long accountId;
     private BigDecimal amount;
-    private Long fromAccountId;
+    private Integer fromAccountId;
     private Long toAccountId;
 }

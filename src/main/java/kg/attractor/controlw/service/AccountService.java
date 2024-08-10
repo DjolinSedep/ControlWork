@@ -12,11 +12,11 @@ import java.util.List;
 @Service
 public class AccountService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+
 
     public Account createAccount(String currency, BigDecimal balance, User user) {
 
+        AccountRepository accountRepository = new AccountRepository();
         List<Account> userAccounts = accountRepository.findByUserId(user.getId());
         if (userAccounts.size() >= 3) {
             throw new IllegalStateException("Превышено количество счетов у пользователя");
@@ -32,8 +32,6 @@ public class AccountService {
                 .build();
 
     }
-
-
 
     public void deposit(Account account, BigDecimal amount) {
     }
