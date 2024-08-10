@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin")
@@ -21,7 +20,6 @@ public class SecurityConfig {
                 .password(passwordEncoder().encode("userpassword"))
                 .roles("USER");
     }
-
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

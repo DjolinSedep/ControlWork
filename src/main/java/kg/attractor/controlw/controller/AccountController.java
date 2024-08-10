@@ -3,6 +3,7 @@ package kg.attractor.controlw.controller;
 import kg.attractor.controlw.dto.AccountDto;
 import kg.attractor.controlw.dto.TransactionDto;
 import kg.attractor.controlw.model.Account;
+import kg.attractor.controlw.model.User;
 import kg.attractor.controlw.repository.AccountRepository;
 import kg.attractor.controlw.repository.UserRepository;
 import kg.attractor.controlw.service.AccountService;
@@ -24,6 +25,9 @@ public class AccountController {
     private UserRepository userRepository;
 
     @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
     private AccountService accountService;
 
     @Autowired
@@ -31,19 +35,18 @@ public class AccountController {
 
     @PostMapping("/accounts")
     public ResponseEntity<String> createAccount(@RequestBody AccountDto accountDto) {
-
         Object user = userRepository.findById(accountDto.getUserId()).orElse(null);
         if (user == null) {
             return new ResponseEntity<>("Пользователь не найден", HttpStatus.NOT_FOUND);
         }
 
-        Account account = accountService.createAccount(accountDto.getCurrency(), BigDecimal.ZERO, () );
+        Account account = accountService.createAccount(accountDto.getCurrency(), BigDecimal.ZERO, user);
+        accountRepository.save(account);
         return new ResponseEntity<>("Счет создан", HttpStatus.CREATED);
     }
 
-    @GetMapping("/accounts/balance")
-    public ResponseEntity<BigDecimal> getAccountBalance(@RequestParam Long accountId) {
-        AccountRepository accountRepository = new AccountRepository();
+    @GetMapping("/accounts/balance/{accountId}")
+    public ResponseEntity<BigDecimal> getAccountBalance(@PathVariable Long accountId) {
         Optional<Account> account = accountRepository.findById(accountId);
         if (account.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -53,8 +56,6 @@ public class AccountController {
 
     @PostMapping("/accounts/balance")
     public ResponseEntity<String> depositToAccount(@RequestBody TransactionDto transactionDto) {
-
-        AccountRepository accountRepository = new AccountRepository();
         Optional<Account> accountOpt = accountRepository.findById(transactionDto.getAccountId());
         if (accountOpt.isEmpty()) {
             return new ResponseEntity<>("Счет не найден", HttpStatus.NOT_FOUND);
@@ -62,12 +63,12 @@ public class AccountController {
 
         Account account = accountOpt.get();
         accountService.deposit(account, transactionDto.getAmount());
+        accountRepository.save(account);
         return new ResponseEntity<>("Баланс обновлен", HttpStatus.OK);
     }
 
     @GetMapping("/accounts")
     public ResponseEntity<List<Account>> getAllAccounts() {
-        AccountRepository accountRepository = new AccountRepository();
         List<Account> accounts = accountRepository.findAll();
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
@@ -80,7 +81,6 @@ public class AccountController {
 
     @PostMapping("/transactions")
     public ResponseEntity<String> makeTransaction(@RequestBody TransactionDto transactionDto) {
-
         boolean success = transactionService.makeTransaction(transactionDto);
         if (success) {
             return new ResponseEntity<>("Транзакция успешна", HttpStatus.OK);
@@ -89,4 +89,3 @@ public class AccountController {
         }
     }
 }
-

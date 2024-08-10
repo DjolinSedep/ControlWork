@@ -1,10 +1,12 @@
 package kg.attractor.controlw.repository;
 
 import kg.attractor.controlw.model.Account;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class AccountRepository  extends JpaRepository<Account, Number> {
     public AccountRepository accountRepository = new AccountRepository();
 

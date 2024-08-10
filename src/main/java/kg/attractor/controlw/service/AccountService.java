@@ -12,8 +12,6 @@ import java.util.List;
 @Service
 public class AccountService {
 
-
-
     public Account createAccount(String currency, BigDecimal balance, User user) {
 
         AccountRepository accountRepository = new AccountRepository();

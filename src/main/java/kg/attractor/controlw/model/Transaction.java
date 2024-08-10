@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -14,8 +16,12 @@ public class Transaction {
     private Long id;
     private BigDecimal amount;
     private Account fromAccount;
+    private LocalDateTime createdAt;
     private Account toAccount;
     private String currency;
     private String status;
-    private Boolean isApproved = false;
+    private Boolean isApproved ;
+
+
+
 }
