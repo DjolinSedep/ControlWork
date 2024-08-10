@@ -11,8 +11,9 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 public class Account {
+
     private long id;
     private  String currency;
-    private BigDecimal balance = BigDecimal.ZERO;
+    private BigDecimal balance;
     private User user;
 }

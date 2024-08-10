@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002
+      author: Sedep
+      changes:
+          - createTable:
+              tableName: accounts
+              columns:
+                - column:
+                    name: id
+                    type: long
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: currency
+                    type: varchar(3)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: balance
+                    type: decimal(19, 4)
+                    defaultValue: 0
+                - column:
+                    name: user_id
+                    type: long
+                    constraints:
+                      nullable: false
+                      foreignKeyName: fk_user_id
+                      references: users(id)
+          - addUniqueConstraint:
+              tableName: accounts
+              columnNames: user_id, currency
